@@ -5,8 +5,10 @@ This repository is a playground for running [uv](https://github.com/astral-sh/uv
 ## Usage
 
 ```shell
-dcm exec app uv run python src/app/main.py
-Hello, world!
+docker compose watch app
+docker compose exec app bash
+uv run hello
+Hello World
 ```
 
 ## License
