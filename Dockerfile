@@ -1,12 +1,21 @@
-FROM debian:bookworm-slim
+FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim
 
-RUN apt-get update && apt-get install -y curl
+WORKDIR /app
 
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
-    echo '. $HOME/.local/bin' >> $HOME/.bashrc
+ENV UV_COMPILE_BYTECODE=1
+ENV UV_LINK_MODE=copy
 
-WORKDIR /root/local/app
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --frozen --no-install-project --no-dev
 
-COPY ./src/app/ ./
+ADD . /app
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --no-dev
 
-RUN . $HOME/.bashrc && uv sync
+ENV PATH="/app/.venv/bin:$PATH"
+
+ENTRYPOINT []
+
+CMD ["uv", "run", "hello"]

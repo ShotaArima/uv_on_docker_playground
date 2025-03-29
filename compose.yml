@@ -2,9 +2,5 @@ services:
   app:
     build: .
     tty: true
-    volumes:
-    - ./src/app:/usr/local/app
-    working_dir: /usr/local/app
-    environment:
-      - PATH=/root/.cargo/bin:${PATH}
+    working_dir: /app
     command: ["tail", "-f", "/dev/null"]
