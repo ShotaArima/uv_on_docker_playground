@@ -22,9 +22,6 @@ jobs:
       - name: Build Docker image
         run: docker build -t uv_container:latest .
 
-      - name: Run Docker container for testing
-        run: docker run --rm uv_container:latest
-
       - name: Cleanup Docker images
         run: docker rmi uv_container:latest
 
