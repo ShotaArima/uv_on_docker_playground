@@ -7,6 +7,7 @@ This repository is a playground for running [uv](https://github.com/astral-sh/uv
 ```shell
 docker compose watch app
 docker compose exec app bash
+uv run hello
 Hello World
 ```
 
