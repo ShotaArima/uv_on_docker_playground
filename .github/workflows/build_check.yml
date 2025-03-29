@@ -1,0 +1,27 @@
+name: Docker Build Check
+
+on:
+  schedule:
+    # Tuesday at 3:00 AM
+     - cron: "0 3 * * 2"
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check Docker version
+        run: docker --version
+
+      - name: Build Docker image
+        run: docker build -t uv_container:latest .
+
+      - name: Cleanup Docker images
+        run: docker rmi uv_container:latest
+
